@@ -31,10 +31,13 @@ const NavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
-          {isAuth? <Button onClick={()=> {dispatch(LogOut())
+          {isAuth? <>
+            <Button as={Link} to='/posts' color="inherit">Posts</Button>
+            <Button onClick={()=> {dispatch(LogOut())
           //window.location.reload(true)
           
-        }} color="inherit">LogOut</Button> : 
+        }} color="inherit">LogOut</Button>
+          </> : 
           <>
           <Button as={Link} to='/' color="inherit">Register</Button>
           <Button as={Link} to='/Login' color="inherit">Login</Button>

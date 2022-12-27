@@ -7,7 +7,7 @@ exports.AuthMiddleWares = async(req,res,next)=>{
         res.status(400).json({message:'you are not authorized!'})
     }
     const decoded = await jwt.verify(token,process.env.SECRET);
-    req.userId = decoded._id 
+    req.userId = decoded.id 
     next()
     
 }

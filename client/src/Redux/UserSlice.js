@@ -22,7 +22,7 @@ export const signIn = createAsyncThunk('user/signIn', async(user,{rejectWithValu
 const UserSlice = createSlice({
     name:'user',
     initialState:{
-        user: JSON.parse(localStorage.getItem('user')),
+       // user: JSON.parse(localStorage.getItem('user')),
         isLoading: false,
         RegisterErros: null,
         LoginErrors:null,
@@ -30,6 +30,10 @@ const UserSlice = createSlice({
         isAuth: Boolean(localStorage.getItem('isAuth'))
     },
     reducers:{
+        ClearErros:(state)=>{
+            state.LoginErrors = null
+            state.RegisterErros= null
+        },
         LogOut: (state)=>{
             localStorage.clear()
             state.user = {}
@@ -69,4 +73,4 @@ const UserSlice = createSlice({
 })
 
 export default UserSlice.reducer
-export const {LogOut} = UserSlice.actions
+export const {LogOut,ClearErros} = UserSlice.actions

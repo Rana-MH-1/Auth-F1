@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { signIn } from "../Redux/UserSlice";
+import { ClearErros, signIn } from "../Redux/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -44,6 +44,7 @@ const Login = () => {
   const dispatch = useDispatch()
   const SigninIn = (e)=>{
     e.preventDefault()
+    dispatch(ClearErros())
     dispatch(signIn(user))
 
   } 
@@ -53,6 +54,8 @@ const Login = () => {
   useEffect(()=>{
      isAuth ? navigate('/Profile') : navigate('/Login')
   },[isAuth])
+
+  const Errors = useSelector(state=> state.User.LoginErrors)
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -84,6 +87,7 @@ const Login = () => {
                 autoComplete="email"
                 autoFocus
               />
+              {<p>{Errors?.email?.msg}</p>}
               <TextField
                 onChange={HandleChange}
                 margin="normal"
@@ -95,6 +99,7 @@ const Login = () => {
                 id="password"
                 autoComplete="current-password"
               />
+               {<p>{Errors?.password?.msg}</p>}
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"

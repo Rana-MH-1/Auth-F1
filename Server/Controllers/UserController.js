@@ -13,7 +13,11 @@ const Register = async(req,res)=>{
             return res.status(402).json({errors: errors.mapped() })
         }
         //vérifier l'utilisateur n'a pas du compte existant
-        const {name,age,email,password} = req.body;
+        const {name,age,email,password,Role} = req.body;
+        /* const isAdmin = await User.findOne({Role:'admin'})
+        if(!isAdmin){
+            await User.create({email:'admin@gmail.com', password:'123456', Role:'admin'})
+        } */
         const found = await User.findOne({email})
         if(found){
             return res.status(401).json({message:'You have already registered!'})
@@ -24,7 +28,7 @@ const Register = async(req,res)=>{
         const salt = bcrypt.genSaltSync(10); //synchrone //déjà bloquant
         const hashedPassword = await bcrypt.hash(password, salt);
         //2 save the user int he DB
-        const newUser = await User.create({name,age,email,password:hashedPassword})
+        const newUser = await User.create({name,age,email,password:hashedPassword,Role})
         res.status(200).json(newUser)
     } catch (error) {
         res.status(500).json({message: error})
